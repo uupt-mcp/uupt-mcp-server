@@ -14,10 +14,6 @@ APP_SECRET=os.getenv("APP_SECRET")
 OPEN_ID=os.getenv("OPEN_ID")
 OPENAPI_URL_BASE=os.getenv("OPENAPI_URL_BASE")
 
-# OPENAPI_URL_BASE="http://openapi.test.uupt.com/v2_0/"
-# APP_ID="ccba8bd4a2d54a2fb6df97e87979f303"
-# APP_SECRET="2815a7a1f8e3405d81fd6263683ec4e7"
-# OPEN_ID="910a0dfd12bb4bc0acec147bcb1ae246"
 
 # 创建MCP服务器实例
 mcp = FastMCP("mcp-server-uupt-orders")
@@ -229,18 +225,3 @@ async def order_cancel(order_code: str,  # 订单编号order_code
 
 if __name__ == "__main__":
     mcp.run()
-    # from_address='郑州市金水区金盛路1号'
-    # to_address='郑州市金水区金盛路2号'
-    # sender_phone='18688888888'
-    # receiver_phone='15288888888'
-    # result = asyncio.run(order_price(from_address, to_address,sender_phone,receiver_phone, ctx=Context()))
-    # print(result)
-
-    # result2 = asyncio.run(order_create(result['price_token'], result['total_money'], result['need_paymoney'], receiver_phone, ctx=Context()))
-    # print(result2)
-
-    # result3 = asyncio.run(order_query(result2['ordercode'], ctx=Context()))
-    # print(result3)
-
-    # result4= asyncio.run(order_cancel(result2['ordercode'], '不想取了', ctx=Context()))
-    # print(result4)
