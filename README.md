@@ -1,8 +1,7 @@
 # UU跑腿 MCP Server
 
-A lightweight Python package for creating orders on the uupt.com OpenAPI platform via the MCP protocol.
-
-# UU跑腿 MCP Server 文档
+一个轻量级的MCP Server，用于通过MCP协议在uupt.com开放平台创建订单
+https://open.uupt.com/
 
 ## 产品介绍
 
@@ -60,18 +59,6 @@ UU跑腿核心API现已全面兼容MCP协议，是国内首家兼容MCP协议的
 - `toAddress`：收货人地址
 - `distance`：配送距离
 - `state`：当前状态
-
-### 配送员实时位置
-
-#### 输入参数
-
-- `orderCode`：UU订单号
-
-#### 输出参数
-
-- `driverName`：配送员姓名
-- `driverMobile`：配送员电话
-- `driverLastLoc`：配送员坐标（百度地图坐标系经纬度，格式：`113.71776,34.767501`）
 
 ## 创建应用和秘钥
 
