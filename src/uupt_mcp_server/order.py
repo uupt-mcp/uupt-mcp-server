@@ -188,7 +188,7 @@ async def post_send(biz, url):
 
 
 if __name__ == "__main__":
-    # mcp.run()
+     mcp.run()
     # asyncio.run(order_price("阳光城", "楷林国际", "郑州市"))
-     asyncio.run(order_create("2ae61aa991124198b2f4a2b5a3f8087f", "18888888888"))
-    # asyncio.run(order_query("250417180110028000037930"))
+    # asyncio.run(order_create("df3fc08498ff4ce3aa81219040f1f2f0", "18888888888"))
+    # asyncio.run(order_query("250418094610379000016927"))
