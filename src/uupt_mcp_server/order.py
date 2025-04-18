@@ -31,7 +31,7 @@ mcp = FastMCP("mcp-server-uupt-orders")
 async def order_price(from_address: str,  # 开始地址，例如：阳光城5号楼6层6号
                       to_address: str,  # 结束地址，例如：楷林国际4层210号
                       city_name: str,  # 配送城市名字，如果没有带’市‘，需要补充，比如郑州市，不能只是郑州
-                      # ctx: Context
+                      ctx: Context
                       ) -> dict:
     """
     Name:
@@ -55,13 +55,13 @@ async def order_price(from_address: str,  # 开始地址，例如：阳光城5�
         'specialChannel': 1
     }
     url = f"{OPENAPI_URL_BASE}order/orderPrice"
-    await post_send(biz, url)
+    return post_send(biz, url)
 
 
 @mcp.tool()
 async def order_create(price_token: str,  # 计算订单价格接口返回的price_token
                        receiver_phone: str,  # 收件人电话，例如：15288888888
-                       # ctx: Context
+                       ctx: Context
                        ) -> dict:
     """
     Name:
@@ -86,12 +86,12 @@ async def order_create(price_token: str,  # 计算订单价格接口返回的pri
         'specialType': "NOT_NEED_WARM"
     }
     url = f"{OPENAPI_URL_BASE}order/addOrder"
-    await post_send(biz, url)
+    return post_send(biz, url)
 
 
 @mcp.tool()
 async def order_query(order_code: str,  # 订单编号order_code
-                      # ctx: Context,
+                      ctx: Context,
                       ) -> dict:
     """
     Name:
@@ -108,13 +108,13 @@ async def order_query(order_code: str,  # 订单编号order_code
     }
 
     url = f"{OPENAPI_URL_BASE}order/orderDetail"
-    await post_send(biz, url)
+    return post_send(biz, url)
 
 
 @mcp.tool()
 async def order_cancel(order_code: str,  # 订单编号order_code
                        reason: str,  # 取消原因reason，例如：不想取了
-                       # ctx: Context,
+                       ctx: Context,
                        ) -> dict:
     """
     Name:
@@ -134,12 +134,12 @@ async def order_cancel(order_code: str,  # 订单编号order_code
         'reason': reason
     }
     url = f"{OPENAPI_URL_BASE}order/cancelOrder"
-    await post_send(biz, url)
+    return post_send(biz, url)
 
 
 @mcp.tool()
 async def driver_track(order_code: str,  # 订单编号order_code
-                       # ctx: Context,
+                       ctx: Context,
                        ) -> dict:
     """
     Name:
@@ -156,10 +156,10 @@ async def driver_track(order_code: str,  # 订单编号order_code
         'order_code': order_code,
     }
     url = f"{OPENAPI_URL_BASE}order/driverTrack"
-    await post_send(biz, url)
+    return post_send(biz, url)
 
 
-async def post_send(biz, url):
+def post_send(biz, url) -> dict:
     timestamp = int(time.time())
     sign_str = json.dumps(biz, ensure_ascii=False, indent=4) + APP_SECRET + str(timestamp)
     sign = hashlib.md5(sign_str.encode(encoding='UTF-8')).hexdigest().upper()
@@ -188,7 +188,8 @@ async def post_send(biz, url):
 
 
 if __name__ == "__main__":
-     mcp.run()
-    # asyncio.run(order_price("阳光城", "楷林国际", "郑州市"))
-    # asyncio.run(order_create("df3fc08498ff4ce3aa81219040f1f2f0", "18888888888"))
-    # asyncio.run(order_query("250418094610379000016927"))
+    mcp.run()
+# asyncio_run = asyncio.run(order_price("阳光城5号楼6层6号", "阳光城5号楼6层6号", "郑州市", ""))
+# print(asyncio_run)
+# asyncio.run(order_create("df3fc08498ff4ce3aa81219040f1f2f0", "18888888888"))
+# asyncio.run(order_query("250418094610379000016927"))
