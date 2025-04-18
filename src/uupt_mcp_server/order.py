@@ -163,7 +163,7 @@ def post_send(biz, url) -> dict:
     }
     print(f"请求参数: {json.dumps(payload, ensure_ascii=False, indent=4)}")
     headers = {
-        "X-App-Id": "9200a7a447234076843b2e0fbfc4f5fc",  # appid
+        "X-App-Id": APP_ID,  # appid
         "Content-Type": "application/json"
     }
     try:
