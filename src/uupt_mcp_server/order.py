@@ -13,13 +13,15 @@ from mcp.server.fastmcp import FastMCP, Context
 # APP_SECRET = os.getenv("APP_SECRET")
 # OPEN_ID = os.getenv("OPEN_ID")
 # IS_TEST = os.getenv("OPENAPI_URL_BASE")
-IS_TEST = 0
-OPENAPI_URL_BASE = "https://api-open.uupt.com/openapi/v3/"
-if IS_TEST == 0:
-    OPENAPI_URL_BASE = "http://api-open.test.uupt.com/openapi/v3/"
+# ORDER_CITY = os.getenv("ORDER_CITY")
+# OPENAPI_URL_BASE = "https://api-open.uupt.com/openapi/v3/"
+
+
+OPENAPI_URL_BASE = "http://api-open.test.uupt.com/openapi/v3/"
 APP_ID = "ccba8bd4a2d54a2fb6df97e87979f303"
-APP_SECRET = "2815a7a1f8e3405d81fd6263683ec4e7"
-OPEN_ID = "910a0dfd12bb4bc0acec147bcb1ae246"
+APP_SECRET = "e3424d4b31fb40dba6c32407b44e7783"
+OPEN_ID = "f9fd1cdf45d645ffbd6de4877c636a84"
+ORDER_CITY = "郑州市"
 
 # 创建MCP服务器实例
 mcp = FastMCP("mcp-server-uupt-orders")
@@ -28,23 +30,28 @@ mcp = FastMCP("mcp-server-uupt-orders")
 @mcp.tool()
 async def order_price(from_address: str,  # 开始地址，例如：阳光城5号楼6层6号
                       to_address: str,  # 结束地址，例如：楷林国际4层210号
+                      city_name: str,  # 配送城市名字，如果没有带’市‘，需要补充，比如郑州市，不能只是郑州
                       # ctx: Context
                       ) -> dict:
     """
     Name:
         智能发单-订单询价
-        
+
     Description:
         查询订单价格，需要需要输入开始地址，结束地址。
-        
+
     Args:
-        from_address: 开始地址，要求完整地址信息
-        to_address: 结束地址，要求完整地址信息
+        from_address: 开始地址，要求完整地址信息。必要字段
+        to_address: 结束地址，要求完整地址信息，必要字段
+        city_name:  配送城市名字，如果没有带’市‘，需要补充，比如郑州市，不能只是郑州,建议参数
     """
+    if ORDER_CITY:
+        city_name = ORDER_CITY
     biz = {
         'fromAddress': from_address,
         'toAddress': to_address,
         'sendType': "SEND",
+        'cityName': city_name,
         'specialChannel': 1
     }
     url = f"{OPENAPI_URL_BASE}order/orderPrice"
@@ -53,10 +60,8 @@ async def order_price(from_address: str,  # 开始地址，例如：阳光城5�
 
 @mcp.tool()
 async def order_create(price_token: str,  # 计算订单价格接口返回的price_token
-                       total_money: str,  # 订单总额，计算订单价格接口返回的total_money
-                       need_pay_money: str,  # 订单需要支付的金额，实际需要支付金额，计算订单价格接口返回的need_pay_money
                        receiver_phone: str,  # 收件人电话，例如：15288888888
-                       ctx: Context
+                       # ctx: Context
                        ) -> dict:
     """
     Name:
@@ -64,15 +69,11 @@ async def order_create(price_token: str,  # 计算订单价格接口返回的pri
         
     Description:
         自动创建订单，需要需要输入：
-        计算订单价格接口返回的price_token，
-        计算订单价格接口返回的total_money，实际需要支付金额，
-        计算订单价格接口返回的need_pay_money，
-        收件人电话。
+        计算订单价格接口返回的price_token，必传字段
+        收件人电话。receiver_phone,必传字段
         
     Args:
         price_token: 计算订单价格接口返回的price_token
-        total_money: 计算订单价格接口返回的total_money，实际需要支付金额，
-        need_pay_money: 计算订单价格接口返回的need_pay_money
         receiver_phone: 收件人联系电话
     """
 
@@ -81,7 +82,8 @@ async def order_create(price_token: str,  # 计算订单价格接口返回的pri
         'receiver_phone': receiver_phone,
         'pushType': "OPEN_ORDER",
         'payType': "BALANCE_PAY",
-        'specialChannel': 1
+        'specialChannel': 1,
+        'specialType': "NOT_NEED_WARM"
     }
     url = f"{OPENAPI_URL_BASE}order/addOrder"
     await post_send(biz, url)
@@ -89,7 +91,7 @@ async def order_create(price_token: str,  # 计算订单价格接口返回的pri
 
 @mcp.tool()
 async def order_query(order_code: str,  # 订单编号order_code
-                      ctx: Context,
+                      # ctx: Context,
                       ) -> dict:
     """
     Name:
@@ -98,8 +100,6 @@ async def order_query(order_code: str,  # 订单编号order_code
     Description:
         获取订单详情，需要需要输入订单编号：
         订单编号order_code
-
-        
     Args:
         order_code: 订单编号order_code
     """
@@ -114,7 +114,7 @@ async def order_query(order_code: str,  # 订单编号order_code
 @mcp.tool()
 async def order_cancel(order_code: str,  # 订单编号order_code
                        reason: str,  # 取消原因reason，例如：不想取了
-                       ctx: Context,
+                       # ctx: Context,
                        ) -> dict:
     """
     Name:
@@ -139,7 +139,7 @@ async def order_cancel(order_code: str,  # 订单编号order_code
 
 @mcp.tool()
 async def driver_track(order_code: str,  # 订单编号order_code
-                       ctx: Context,
+                       # ctx: Context,
                        ) -> dict:
     """
     Name:
@@ -171,13 +171,14 @@ async def post_send(biz, url):
     }
     print(f"请求参数: {json.dumps(payload, ensure_ascii=False, indent=4)}")
     headers = {
-        "X-App-Id": "ccba8bd4a2d54a2fb6df97e87979f303",  # appid
+        "X-App-Id": "9200a7a447234076843b2e0fbfc4f5fc",  # appid
         "Content-Type": "application/json"
     }
     try:
         print("请求URL: ", url)
         res = requests.post(url, json=payload, headers=headers)
         if res.status_code == 200:
+            print("result: ", res.json())
             return res.json()
         else:
             print(f"Error: {res.status_code}, {res.text}")
@@ -188,4 +189,6 @@ async def post_send(biz, url):
 
 if __name__ == "__main__":
     # mcp.run()
-    print(asyncio.run(order_price("阳光城", "楷林国际")))
+    # asyncio.run(order_price("阳光城", "楷林国际", "郑州市"))
+     asyncio.run(order_create("2ae61aa991124198b2f4a2b5a3f8087f", "18888888888"))
+    # asyncio.run(order_query("250417180110028000037930"))
