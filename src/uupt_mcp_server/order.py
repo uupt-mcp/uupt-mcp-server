@@ -9,19 +9,11 @@ import requests
 import asyncio
 from mcp.server.fastmcp import FastMCP, Context
 
-# APP_ID = os.getenv("APP_ID")
-# APP_SECRET = os.getenv("APP_SECRET")
-# OPEN_ID = os.getenv("OPEN_ID")
-# IS_TEST = os.getenv("OPENAPI_URL_BASE")
-# ORDER_CITY = os.getenv("ORDER_CITY")
-# OPENAPI_URL_BASE = "https://api-open.uupt.com/openapi/v3/"
-
-
-OPENAPI_URL_BASE = "http://api-open.test.uupt.com/openapi/v3/"
-APP_ID = "ccba8bd4a2d54a2fb6df97e87979f303"
-APP_SECRET = "e3424d4b31fb40dba6c32407b44e7783"
-OPEN_ID = "f9fd1cdf45d645ffbd6de4877c636a84"
-ORDER_CITY = "郑州市"
+APP_ID = os.getenv("APP_ID")
+APP_SECRET = os.getenv("APP_SECRET")
+OPEN_ID = os.getenv("OPEN_ID")
+ORDER_CITY = os.getenv("ORDER_CITY")
+OPENAPI_URL_BASE = "https://api-open.uupt.com/openapi/v3/"
 
 # 创建MCP服务器实例
 mcp = FastMCP("mcp-server-uupt-orders")
