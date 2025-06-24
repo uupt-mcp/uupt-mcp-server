@@ -1,14 +1,8 @@
 import os
-import copy
-import re
-from turtle import reset
-from unittest import result
-import httpx
-import hashlib, uuid, time, json
+import hashlib, time, json
 import requests
-import asyncio
 from pydantic import Field
-from mcp.server.fastmcp import FastMCP, Context
+from mcp.server.fastmcp import FastMCP
 
 APP_ID = os.getenv("APP_ID")
 APP_SECRET = os.getenv("APP_SECRET")

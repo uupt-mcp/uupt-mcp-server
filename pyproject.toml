@@ -1,20 +1,10 @@
 [project]
 name = "uupt-mcp-server"
-<<<<<<< HEAD
-version = "0.2.4"
-description = "uupt.com openapi mcp server"
-readme = "README.md"
-requires-python = ">=3.11.0"
-dependencies = [
-    "httpx>=0.28.1",
-    "mcp[cli]>=1.6.0",
-    "requests>=2.32.3"
-=======
 version = "0.2.5"
 description = "uupt.com openapi mcp server"
 readme = "README.md"
 authors = [
-    { name = "韦春申-DBA", email = "594002836@qq.com" }
+    { name = "uupt"}
 ]
 requires-python = ">=3.10"
 dependencies = [
@@ -23,7 +13,6 @@ dependencies = [
     "dotenv>=0.9.9",
     "httpx>=0.28.1",
     "mcp[cli]>=1.9.4",
->>>>>>> 94ae7af (优化Python兼容性,支持Python3.10)
 ]
 
 [[tool.uv.index]]
@@ -34,18 +23,9 @@ required-environments = [
     "sys_platform == 'darwin' and platform_machine == 'x86_64'",
 ]
 
-<<<<<<< HEAD
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[project.scripts]
-uupt-mcp-server = "uupt_mcp_server:main"
-=======
 [project.scripts]
 uupt-mcp-server = "uupt_mcp_server:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
->>>>>>> 94ae7af (优化Python兼容性,支持Python3.10)
