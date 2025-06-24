@@ -112,21 +112,13 @@ pip3 list
       "command": "python",
       "args": [
         "-m",
-<<<<<<< HEAD
-        "uupt-mcp-server"
-=======
         "uupt_mcp_server"
->>>>>>> 94ae7af (优化Python兼容性,支持Python3.10)
       ],
       "env": {
         "APP_ID": "您的APP_ID",
         "APP_SECRET": "您的APP_SECRET",
         "OPEN_ID": "您的OPEN_ID",
-<<<<<<< HEAD
-        "OPENAPI_URL_BASE": "https://openapi.uupt.com/v2_0/"
-=======
         "ORDER_CITY": "郑州市（您的发单城市，格式：郑州市，‘市’字请不要省略，必须要有）"
->>>>>>> 94ae7af (优化Python兼容性,支持Python3.10)
       },
       "transportType": "stdio"
     }
