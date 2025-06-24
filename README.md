@@ -109,9 +109,8 @@ pip3 list
     "uupt-mcp-server": {
       "disabled": false,
       "timeout": 60,
-      "command": "python",
+      "command": "uvx",
       "args": [
-        "-m",
         "uupt_mcp_server"
       ],
       "env": {
@@ -119,8 +118,7 @@ pip3 list
         "APP_SECRET": "您的APP_SECRET",
         "OPEN_ID": "您的OPEN_ID",
         "ORDER_CITY": "郑州市（您的发单城市，格式：郑州市，‘市’字请不要省略，必须要有）"
-      },
-      "transportType": "stdio"
+      }
     }
   }
 }
