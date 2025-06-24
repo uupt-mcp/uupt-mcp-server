@@ -1,6 +1,6 @@
 [project]
 name = "uupt-mcp-server"
-version = "0.2.5"
+version = "0.2.6"
 description = "uupt.com openapi mcp server"
 readme = "README.md"
 authors = [
